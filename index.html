@@ -5,9 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDoList</title>
+     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div></div>
+    <section class="blockSelect">
+         <button class="select">Select</button>
+         <h3 class="import">important</h3>
+    </section>
+    <div class="container">
+        <div class="main">
+            <div class="listFilter"> 
+                <button class="open">Filter</button>
+                <b>ToDoList</b>  
+                <b>All - 3,</b>
+                <b> Done - 2,</b>
+                <b>important - 1</b>
+            </div> 
+            <div class="modal">
+                 <form action="#">
+                    <input class="search" type="text" placeholder="search my task ">
+                 </form>
+                 <div class="locationList"> 
+                    <ol>
+                        <li class="list-2">- List</li>
+                    </ol>
+                      <button class="date">date</button>
+                      <button class="deleted">deleted</button>
+                       <button class="important">important</button>
+                 </div> 
+                 <ol>
+                    <li class="list">- List</li>
+                    <li>- List</li>
+                 </ol>        
+                 <div class="btndata">
+                    <button class="data">Data</button>
+                 </div>  
+                 <div class="addTask">
+                    <button class="add">Add new Task</button>
+                 </div>   
+                 <div class="oval">
+                      <span>+</span>
+                 </div> 
+            </div>
+       </div>
+    </div>
+   
     <script src="script.js"></script>
 </body>
 </html>
