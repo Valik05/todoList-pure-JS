@@ -16,21 +16,23 @@ document.addEventListener('DOMContentLoaded', () => {
         filterAll = document.querySelector('.favourite--all')
 
     const filteredStatus = {
-        filteredAll:false,
+        filteredAll: false,
         filteredDone: false,
         filteredImportant: false,
-        onOpened:false
+        onOpened: false
     }
     openModal.addEventListener('click', () => {
         console.log(1)
         filteredStatus.onOpened = !filteredStatus.onOpened
-        if(filteredStatus.onOpened){
+        if (filteredStatus.onOpened) {
             modalWindow.style.display = 'flex';
-        } else{
+        } else {
             modalWindow.style.display = 'none';
         }
-        
+
     })
+
+
     exit.addEventListener('click', () => {
         modalWindow.style.display = 'none';
     })
@@ -48,17 +50,24 @@ document.addEventListener('DOMContentLoaded', () => {
             this.deleted = deleted
         }
     }
-    JSON.stringify
     let itemId = 100;
-    fetch('datas.json').then(() =>{
+    fetch('datas.json').then(() => {
         console.log(numbers)
     })
-    let objectes = [
-        createItem('Drink Coffe'),
-        createItem('Learn JS'),
-        createItem('Have a lunch')
-    ];
-    function createItem(text) {
+    const listNames = localStorage.getItem('itemListName').split(',')
+    const listDates = localStorage.getItem('itemListDates').split(',')
+
+    let objectes = [];
+    function fromLocal() {
+        for (let key of listNames) {
+            if (!key) return
+            objectes.push(createItem(key, listDates[listNames.indexOf(key)]))
+        }
+    }
+    fromLocal()
+
+    console.log(listDates, listNames)
+    function createItem(text, time) {
         return new Obj(text, false, false, time, itemId++, false)
     }
 
@@ -72,9 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderItems(arr) {
-        if(arr.length === 0){
-            items.innerHTML = "Nothing pass"
-            return 
+        if (arr.length === 0) {
+            items.innerHTML = "No items"
+            doneCount.innerHTML = `Done - 0,`;
+            importantCount.innerHTML = `Important - 0,`;
+            all.innerHTML = `All - 0,`
+            return
         }
         const allCurrent = objectes.length;
         const importantCurrent = objectes.filter((el) => el.done).length;
@@ -134,12 +146,23 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             deleteItem[i].addEventListener('click', () => {
                 key.deleted = true;
+                const arrText = [];
+                const arrDates = [];
                 objectes.forEach((obj) => {
                     if (obj.deleted) {
                         objectes.splice(objectes.indexOf(obj), 1);
                         renderItems(objectes)
                         renderCounter()
+                    } else {
+                        arrText.push(obj.text)
+                        arrDates.push(obj.date)
+                        renderItems(objectes)
+                        renderCounter()
                     }
+                    localStorage.setItem('itemListName', arrText)
+                    localStorage.setItem('itemListDates', arrDates)
+                    renderItems(objectes)
+                    renderCounter()
                 })
             })
             console.log(i, id, important[i], deleteItem[i])
@@ -147,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
     }
-    filterAll.addEventListener('click', () =>{
+    filterAll.addEventListener('click', () => {
         filteredStatus.filteredAll = !filteredStatus.filteredAll
         if (!filteredStatus.filteredAll) {
             allText.classList = 'all-text'
@@ -177,16 +200,16 @@ document.addEventListener('DOMContentLoaded', () => {
             filterItems('important')
         }
     })
-    function filterItems(filter){
-        switch(filter){
-          case 'all':
-          return renderItems(objectes)
-          case 'important':
-          return renderItems(objectes.filter(el => el.important))
-          case 'done':
-            return renderItems(objectes.filter(el => el.done))
-          default:
-            return renderItems(objectes)
+    function filterItems(filter) {
+        switch (filter) {
+            case 'all':
+                return renderItems(objectes)
+            case 'important':
+                return renderItems(objectes.filter(el => el.important))
+            case 'done':
+                return renderItems(objectes.filter(el => el.done))
+            default:
+                return renderItems(objectes)
         }
     }
 
@@ -195,8 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const search = document.querySelector('.search-input'),
-    searchForm = document.querySelector('.search')
-    searchForm.addEventListener('submit', (e) =>{
+        searchForm = document.querySelector('.search')
+    searchForm.addEventListener('submit', (e) => {
         e.preventDefault()
     })
     search.addEventListener('change', () => {
@@ -213,43 +236,27 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(addBtn, addInput)
     addBtn.addEventListener('click', (e) => {
         e.preventDefault()
+        const arrText = [];
+        const arrDates = [];
         if (addInput.value) {
-            const newItem = createItem(addInput.value);
+            const newItem = createItem(addInput.value, time);
             const newArr = [
                 ...objectes,
                 newItem
             ]
             objectes = newArr;
             renderItems(newArr)
+            newArr.forEach((item) => {
+                arrText.push(item.text)
+                arrDates.push(item.date)
+                localStorage.setItem('itemListName', arrText)
+            localStorage.setItem('itemListDates', arrDates)
+            })
+            
         }
+
         console.log(addInput.value)
         addInput.value = '';
     })
 
-
-
-    // const todoCurrent = todoData.filter((el) => !el.done).length;
-    // const doneCurrent = todoData.length - todoCurrent;
-    // const visibleItems = this.filter( this.search(todoData,term), filter)
-    // const search = (arr,term) =>{
-    //     if(term.length === 0){
-    //       return arr
-    //     }
-    //     return arr.filter((el) => {
-    //       return el.label.toLowerCase().indexOf(term) > -1;
-    //     })
-    // }
-    
-    // addItem = (label) => {
-    //     const newItem = this.createItem(label)
-    //     this.setState(({ todoData }) => {
-    //       const newArr = [
-    //         ...todoData,
-    //         newItem
-    //       ]
-    //       return {
-    //         todoData: newArr
-    //       }
-    //     })
-    //   }
 })
