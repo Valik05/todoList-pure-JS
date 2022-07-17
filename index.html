@@ -1,55 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDoList</title>
-     <link rel="stylesheet" href="style.css">
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>ToDoList</title>
+   <link rel="stylesheet" href="style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&family=Roboto&display=swap" rel="stylesheet">
+   <script src="https://kit.fontawesome.com/643d824ab4.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <section class="blockSelect">
-         <button class="select">Select</button>
-         <h3 class="import">important</h3>
-    </section>
-    <div class="container">
-        <div class="main">
-            <div class="listFilter"> 
-                <button class="open">Filter</button>
-                <b>ToDoList</b>  
-                <b>All - 3,</b>
-                <b> Done - 2,</b>
-                <b>important - 1</b>
-            </div> 
-            <div class="modal">
-                 <form action="#">
-                    <input class="search" type="text" placeholder="search my task ">
-                 </form>
-                 <div class="locationList"> 
-                    <ol>
-                        <li class="list-2">- List</li>
-                    </ol>
-                      <button class="date">date</button>
-                      <button class="deleted">deleted</button>
-                       <button class="important">important</button>
-                 </div> 
-                 <ol>
-                    <li class="list">- List</li>
-                    <li>- List</li>
-                 </ol>        
-                 <div class="btndata">
-                    <button class="data">Data</button>
-                 </div>  
-                 <div class="addTask">
-                    <button class="add">Add new Task</button>
-                 </div>   
-                 <div class="oval">
-                      <span>+</span>
-                 </div> 
+   <div class="blockSelect">
+      <div class="exit"><i class="fa-solid fa-xmark"></i></div>
+      <div class="modal-items">
+         <div class="filter-var">
+            <span class="all-text">All</span>
+            <span class="favourite favourite--all"><i class="fa-solid fa-heart"></i></span>
+         </div>
+         <div class="filter-var">
+            <span class="important-text">Important</span>
+            <span class="favourite favourite--important"><i class="fa-solid fa-heart"></i></span>
+         </div>
+         <div class="filter-var">
+            <span class="done-text">Done</span>
+            <span class="favourite favourite--done"><i class="fa-solid fa-heart"></i></span>
+         </div>
+      </div>
+   </div>
+   <div class="container">
+
+      <section class="main">
+         <div class="title">
+            <h1>ToDoList</h1>
+         </div>
+         <div class="listFilter">
+            <div class="open-btn"><button class="open"><span>Filter</span></button></div>
+            <div class="list-text">
+               <span class="list-text-all"></span>
+               <span class="list-text-done"></span></span>
+               <span class="list-text-important"></span></span>
             </div>
-       </div>
-    </div>
-   
-    <script src="script.js"></script>
+         </div>
+         <div class="search-form">
+            <form action="" class="search">
+               <input class="search-input" type="text" placeholder="Search my task ">
+            </form>
+         </div>
+         <div class="items">
+
+         </div>
+         <div class="addItems">
+            <form action="" class="addItem-form">
+               <input class="addItem-form-input" type="text" placeholder="Write new todo exercise">
+               <button class="addItem-form-btn" type="submit">Add Item</button>
+            </form>
+         </div>
+         <footer>
+            <span class="date">17.07.2022</span>
+         </footer>
+      </section>
+   </div>
+
+   <script src="script.js"></script>
 </body>
+
 </html>
