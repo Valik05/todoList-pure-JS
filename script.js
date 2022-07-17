@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         onOpened: false
     }
     openModal.addEventListener('click', () => {
-        console.log(1)
         filteredStatus.onOpened = !filteredStatus.onOpened
         if (filteredStatus.onOpened) {
             modalWindow.style.display = 'flex';
@@ -51,9 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     let itemId = 100;
-    fetch('datas.json').then(() => {
-        console.log(numbers)
-    })
     const listNames = localStorage.getItem('itemListName').split(',')
     const listDates = localStorage.getItem('itemListDates').split(',')
 
@@ -65,8 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     fromLocal()
-
-    console.log(listDates, listNames)
     function createItem(text, time) {
         return new Obj(text, false, false, time, itemId++, false)
     }
@@ -88,12 +82,22 @@ document.addEventListener('DOMContentLoaded', () => {
             all.innerHTML = `All - 0,`
             return
         }
+
         const allCurrent = objectes.length;
         const importantCurrent = objectes.filter((el) => el.done).length;
         const doneCurrent = objectes.filter((el) => el.important).length;
         doneCount.innerHTML = `Done - ${doneCurrent},`;
         importantCount.innerHTML = `Important - ${importantCurrent},`;
         all.innerHTML = `All - ${allCurrent},`
+
+        const arrText = [];
+        const arrDates = [];
+        objectes.forEach((obj) => {
+            arrText.push(obj.text)
+            arrDates.push(obj.date)
+            localStorage.setItem('itemListName', arrText)
+            localStorage.setItem('itemListDates', arrDates)
+        })
 
         items.innerHTML = '';
         arr.forEach((item) => {
@@ -118,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const important = document.querySelectorAll('.item-important'),
             deleteItem = document.querySelectorAll('.item-delete'),
             itemText = document.querySelectorAll('.item-text')
-        console.log(important)
         addEvents(important, deleteItem, itemText)
     }
     renderItems(objectes)
@@ -156,16 +159,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         arrText.push(obj.text)
                         arrDates.push(obj.date)
+                        localStorage.setItem('itemListName', arrText)
+                        localStorage.setItem('itemListDates', arrDates)
                         renderItems(objectes)
                         renderCounter()
                     }
-                    localStorage.setItem('itemListName', arrText)
-                    localStorage.setItem('itemListDates', arrDates)
                     renderItems(objectes)
                     renderCounter()
                 })
             })
-            console.log(i, id, important[i], deleteItem[i])
             i++
 
         }
@@ -223,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault()
     })
     search.addEventListener('change', () => {
-        console.log(search.value)
+
         const visibleItems = objectes.filter((el) => {
             return el.text.indexOf(search.value) > -1;
         })
@@ -233,7 +235,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('.addItem-form'),
         addInput = document.querySelector('.addItem-form-input'),
         addBtn = document.querySelector('.addItem-form-btn')
-    console.log(addBtn, addInput)
     addBtn.addEventListener('click', (e) => {
         e.preventDefault()
         const arrText = [];
@@ -250,12 +251,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 arrText.push(item.text)
                 arrDates.push(item.date)
                 localStorage.setItem('itemListName', arrText)
-            localStorage.setItem('itemListDates', arrDates)
+                localStorage.setItem('itemListDates', arrDates)
             })
-            
+
         }
 
-        console.log(addInput.value)
+
         addInput.value = '';
     })
 
